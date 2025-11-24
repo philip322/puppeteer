@@ -34,17 +34,18 @@ RUN chmod 600 /root/.ssh/id_cron && \
 WORKDIR /app
 COPY package.json ./
 RUN npm install --production --verbose --legacy-peer-deps
+
 COPY index.js ./
 COPY crontab ./
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod 755 /entrypoint.sh
 
 # 创建 crontab（保留你之前的定时任务）
 RUN mkdir -p /var/spool/cron/crontabs && \
     echo "# */2 * * * * /usr/bin/node /app/0.js >> /var/log/cron.log 2>&1" > /var/spool/cron/crontabs/root && \
     chmod 600 /var/spool/cron/crontabs/root && \
     touch /var/log/cron.log
-
+    
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod 755 /entrypoint.sh
 # 最终命令：启动 cron 并给 shell
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["crond -f -l 4 && echo '定时任务已启动！直接敲 node xxx.js 运行脚本' && exec sh"]
