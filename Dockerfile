@@ -14,7 +14,7 @@ RUN apk add --no-cache \
     g++
 
 # npm 配置（加速 + 清理）
-RUN npm config set registry https://registry.npmmirror.com/ && \
+RUN npm config set registry https://registry.npm.taobao.org/ && \
     npm cache clean --force
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
