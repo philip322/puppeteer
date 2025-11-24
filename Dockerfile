@@ -33,7 +33,7 @@ RUN chmod 600 /root/.ssh/id_cron && \
 WORKDIR /app
 COPY package.json ./
 RUN npm install --production --verbose --legacy-peer-deps
-
+RUN apk del make g++
 COPY index.js ./
 COPY crontab ./
 
