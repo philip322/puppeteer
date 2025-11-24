@@ -8,10 +8,7 @@ RUN apk add --no-cache \
     harfbuzz \
     ca-certificates \
     ttf-freefont \
-    font-noto-cjk \
-    python3 \
-    make \
-    g++
+    font-noto-cjk 
 
 # npm 配置（加速 + 清理）
 RUN npm config set registry https://registry.npmmirror.com/ && \
