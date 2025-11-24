@@ -9,6 +9,8 @@ RUN apk add --no-cache \
     ca-certificates \
     ttf-freefont \
     font-noto-cjk \
+    bash \
+    python3 \
     make \
     g++
 
@@ -33,7 +35,7 @@ RUN chmod 600 /root/.ssh/id_cron && \
 WORKDIR /app
 COPY package.json ./
 RUN npm install --production --verbose --legacy-peer-deps
-RUN apk del make g++
+RUN apk del make g++ python3
 COPY index.js ./
 COPY crontab ./
 
