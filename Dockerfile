@@ -10,6 +10,7 @@ RUN apk add --no-cache \
     ttf-freefont \
     font-noto-cjk \
     bash \
+    curl \
     python3 \
     make \
     g++
