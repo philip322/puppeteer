@@ -21,11 +21,11 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json ./
 
 RUN npm install --production --verbose --legacy-peer-deps
 
-COPY . .
+COPY index.js ./
 
 # 创建 crontab（保留你之前的定时任务）
 RUN mkdir -p /var/spool/cron/crontabs && \
