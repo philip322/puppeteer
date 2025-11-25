@@ -10,7 +10,7 @@ RUN npm install puppeteer@latest --production --legacy-peer-deps
 FROM node:20-alpine
 RUN apk add --no-cache \
     chromium  nss freetype harfbuzz ca-certificates ttf-freefont font-noto-cjk \
-    openssh-client sshpass curl
+    openssh-client sshpass curl bash
 
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
@@ -23,7 +23,7 @@ RUN chmod 600 /root/.ssh/id_cron* && \
     echo "Host *" >> /root/.ssh/config && \
     echo "  StrictHostKeyChecking no" >> /root/.ssh/config && \
     echo "  IdentityFile /root/.ssh/id_cron" >> /root/.ssh/config
-
+RUN echo "alias ll='ls -la'" > /root/.bashrc
 WORKDIR /app
 
 COPY --from=builder /app/node_modules /app/node_modules
