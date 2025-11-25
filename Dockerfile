@@ -11,18 +11,17 @@ FROM node:20-alpine
 RUN apk add --no-cache \
     chromium  nss freetype harfbuzz ca-certificates ttf-freefont font-noto-cjk \
     openssh-client sshpass curl bash
-
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+COPY --from=builder /app/node_modules /root/node_modules
 
 RUN echo "alias ll='ls -la'" > /root/.bashrc && \
     echo "PS1='[\W]\$ '" >> /root/.bashrc
 WORKDIR /root
-
-COPY --from=builder /app/node_modules /root/node_modules
-
 COPY package.json ./
 COPY index.js ./
+
+VOLUME /data
 
 # 最终命令：启动 cron 并给 shell
 ENTRYPOINT ["/entrypoint.sh"]
