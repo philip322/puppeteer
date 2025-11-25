@@ -20,7 +20,8 @@ RUN echo "alias ll='ls -la'" > /root/.bashrc && \
 WORKDIR /root
 COPY package.json ./
 COPY index.js ./
-
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod 755 /entrypoint.sh
 VOLUME /data
 RUN ln -s /root/node_modules /data/node_modules
 
