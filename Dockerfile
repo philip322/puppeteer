@@ -25,7 +25,7 @@ RUN chmod 600 /root/.ssh/id_cron* && \
     echo "  IdentityFile /root/.ssh/id_cron" >> /root/.ssh/config
     
 RUN echo "alias ll='ls -la'" > /root/.bashrc && \
-    echo "PS1='\[\e[1;35m\][\W]\$\[\e[0m\] '" >> /root/.bashrc
+    echo "PS1='\[\e[1;32m\][\W]\$\[\e[0m\] '" >> /root/.bashrc
 WORKDIR /root
 COPY package.json ./
 COPY index.js ./
