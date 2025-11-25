@@ -4,7 +4,7 @@
 
 # 如果你把任务写在项目里的 crontab 文件，可以这样加载
 if [ -f "/data/crontab" ]; then
-    cat /app/crontab > /var/spool/cron/crontabs/root
+    cat /data/crontab > /var/spool/cron/crontabs/root
     chmod 600 /var/spool/cron/crontabs/root
     echo "Loaded custom crontab:"
     cat /var/spool/cron/crontabs/root
