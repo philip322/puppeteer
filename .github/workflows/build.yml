@@ -35,5 +35,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:normal-bash-${{ env.DATE_TAG }}
-            ghcr.io/${{ github.repository }}:normal-bash
+            ghcr.io/${{ github.repository }}:normal-test-${{ env.DATE_TAG }}
+            ghcr.io/${{ github.repository }}:normal-test
