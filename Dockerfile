@@ -15,22 +15,15 @@ RUN apk add --no-cache \
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
-RUN mkdir -p /root/.ssh && chmod 700 /root/.ssh && \
-    touch /root/.ssh/known_hosts
-# 复制私钥（确保权限是 600！）
-COPY id_cron* /root/.ssh/
-RUN chmod 600 /root/.ssh/id_cron* && \
-    echo "Host *" >> /root/.ssh/config && \
-    echo "  StrictHostKeyChecking no" >> /root/.ssh/config && \
-    echo "  IdentityFile /root/.ssh/id_cron" >> /root/.ssh/config
-RUN echo "alias ll='ls -la'" > /root/.bashrc
-WORKDIR /app
+RUN echo "alias ll='ls -la'" > /root/.bashrc && \
+    echo "PS1='[\W]\$ '" >> /root/.bashrc
+WORKDIR /root
 
-COPY --from=builder /app/node_modules /app/node_modules
-
+COPY --from=builder /app/node_modules /root/node_modules
 
 COPY package.json ./
 COPY index.js ./
 
 # 最终命令：启动 cron 并给 shell
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["crond", "-f", "-l", "4"]
