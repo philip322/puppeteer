@@ -28,5 +28,12 @@ fi
 # 确保日志可写
 touch /var/log/cron.log
 
+# 执行用户定义的脚步
+if [ -f "/data/start.sh" ]; then
+    rm -rf /data/node_modules && ln -s /root/node_modules /data/node_modules
+    bash /data/start.sh
+fi
+
+
 # 执行传入的命令（通常是 crond -f）
 exec "$@"
