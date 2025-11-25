@@ -1,0 +1,44 @@
+# ========= 第1阶段：构建 + 全局安装 puppeteer =========
+FROM node:20-alpine AS builder
+# 构建阶段才需要编译工具
+RUN apk add --no-cache python3 make g++
+# 全局安装 puppeteer（会自动下载 Chromium，但我们后面会删掉它）
+# npm 配置（加速 + 清理）
+RUN npm config set registry https://registry.npmmirror.com/ && \
+    npm cache clean --force
+RUN npm install -g puppeteer --legacy-peer-deps --save-exact
+
+# ========= 第2阶段：运行时极致精简镜像 =========
+FROM node:20-alpine
+
+# 只装运行时真正需要的包（没有 python3/make/g++）
+RUN apk add --no-cache \
+    chromium  nss freetype harfbuzz ca-certificates ttf-freefont font-noto-cjk \
+    openssh-client sshpass curl
+
+# Puppeteer 环境变量（强制使用系统 chromium）
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
+# 复制第1阶段全局安装的 puppeteer（只复制二进制和 node_modules）
+COPY --from=builder /usr/lib/node_modules/puppeteer /usr/lib/node_modules/puppeteer
+COPY --from=builder /usr/bin/puppeteer /usr/bin/puppeteer
+# 建立软链接让全局命令可用
+RUN ln -s /usr/lib/node_modules/puppeteer/node_modules/.bin/puppeteer /usr/bin/puppeteer || true
+
+# SSH + cron 目录
+RUN mkdir -p /root/.ssh /var/spool/cron/crontabs /var/log && chmod 700 /root/.ssh && \
+    touch /root/.ssh/known_hosts
+# 复制私钥（确保权限是 600！）
+COPY id_cron /root/.ssh/
+RUN chmod 600 /root/.ssh/id_cron && \
+    echo "Host *" >> /root/.ssh/config && \
+    echo "  StrictHostKeyChecking no" >> /root/.ssh/config && \
+    echo "  IdentityFile /root/.ssh/id_cron" >> /root/.ssh/config
+    
+WORKDIR /app
+COPY package.json ./
+COPY index.js ./
+
+ENTRYPOINT ["sh", "-c"]
+CMD ["crond -f -l 4 && echo '全局 puppeteer 已就绪！直接用 puppeteer xxx.js' && exec sh"]
