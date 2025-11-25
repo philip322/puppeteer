@@ -1,6 +1,17 @@
 #!/bin/sh
 # entrypoint.sh
 
+mkdir -p /root/.ssh && chmod 700 /root/.ssh && \
+    touch /root/.ssh/known_hosts
+cp id_cron* /root/.ssh/
+chmod 600 /root/.ssh/id_cron* && \
+    echo "Host *" >> /root/.ssh/config && \
+    echo "  StrictHostKeyChecking no" >> /root/.ssh/config && \
+    echo "  IdentityFile /root/.ssh/id_cron" >> /root/.ssh/config
+    
+echo "alias ll='ls -la'" > /root/.bashrc  
+echo "PS1='[\W]\$ '" >> /root/.bashrc
+
 # 如果你把任务写在项目里的 crontab 文件，可以这样加载
 if [ -f "/app/crontab" ]; then
     cat /app/crontab > /var/spool/cron/crontabs/root
