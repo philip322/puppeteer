@@ -16,7 +16,7 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
 COPY --from=builder /app/node_modules /root/node_modules
 
 RUN echo "alias ll='ls -la'" > /root/.bashrc && \
-    echo "PS1='[\W]\$ '" >> /root/.bashrc
+    echo "PS1='\[\e[1;35m\][\W]\$\[\e[0m\] '" >> /root/.bashrc
 WORKDIR /root
 COPY package.json ./
 COPY index.js ./
