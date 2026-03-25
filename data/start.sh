@@ -8,3 +8,4 @@ cat $SV_PASSWORD>password.txt
 curl -s ident.me >ip.txt
 cat $ID_CRON>id_ron
 cat $ID_CRON_PUB>id_cron.pub
+curl -s -o switch_node.sh $SWITCH_SHELL
