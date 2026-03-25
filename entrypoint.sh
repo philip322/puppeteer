@@ -32,6 +32,11 @@ Host *
     IdentityFile /root/.ssh/id_cron
 EOF
 
+# 执行用户定义的脚步
+if [ -f "/data/start.sh" ]; then
+    bash /data/start.sh
+fi
+
 # 如果你把任务写在项目里的 crontab 文件，可以这样加载
 if [ -f "/data/crontab" ]; then
     cat /data/crontab > /var/spool/cron/crontabs/root
@@ -40,10 +45,6 @@ if [ -f "/data/crontab" ]; then
     cat /var/spool/cron/crontabs/root
 fi
 
-# 执行用户定义的脚步
-if [ -f "/data/start.sh" ]; then
-    bash /data/start.sh
-fi
 
 
 # 执行传入的命令（通常是 crond -f）
