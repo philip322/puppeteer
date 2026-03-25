@@ -1,5 +1,9 @@
 # 第一阶段构建基础puppeteer
 FROM node:20-alpine AS builder
+ENV TZ=Asia/Shanghai \
+    SSH_USER=ubuntu \
+    SSH_PASSWORD=ubuntu!123 \
+    
 RUN apk add --no-cache python3 make g++ tzdata
 RUN npm config set registry https://registry.npmmirror.com/  && \
     npm cache clean --force
