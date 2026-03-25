@@ -30,6 +30,8 @@ COPY index.js ./
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 
+EXPOSE 22
+
 # 最终命令：启动 cron 并给 shell
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["crond", "-f", "-l", "4"]
