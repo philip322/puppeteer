@@ -1,9 +1,5 @@
 # 第一阶段构建基础puppeteer
 FROM node:20-alpine AS builder
-ENV TZ=Asia/Shanghai \
-    SSH_USER=ubuntu \
-    SSH_PASSWORD=ubuntu!123 \
-    
 RUN apk add --no-cache python3 make g++ tzdata
 RUN npm config set registry https://registry.npmmirror.com/  && \
     npm cache clean --force
@@ -17,6 +13,10 @@ RUN apk add --no-cache \
     openssh-client sshpass curl bash
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV TZ=Asia/Shanghai \
+    SSH_USER=ubuntu \
+    SSH_PASSWORD=ubuntu!123 \
+      
 COPY --from=builder /app/node_modules /root/node_modules
 COPY --from=builder /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN echo "Asia/Shanghai" > /etc/timezone
