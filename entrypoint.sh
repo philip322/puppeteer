@@ -31,11 +31,7 @@ Host *
     StrictHostKeyChecking no
     IdentityFile /root/.ssh/id_cron
 EOF
-cat $TELEGRAM >telegram.json
-cat $SV_PASSWORD>password.txt
-curl -s ident.me >ip.txt
-cat $ID_CRON>id_ron
-cat $ID_CRON_PUB>id_cron.pub
+
 # 如果你把任务写在项目里的 crontab 文件，可以这样加载
 if [ -f "/data/crontab" ]; then
     cat /data/crontab > /var/spool/cron/crontabs/root
