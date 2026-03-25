@@ -2,6 +2,16 @@
 cd /data
 rm -rf *.png
 echo "Hello World ~~"
+cat <<EOF
+SV_HOST=""
+TELEGRAM=''
+SV_PASSWORD=''
+ID_CRON=''
+ID_CRON_PUB=''
+SWITCH_SHELL=''
+SSH_USER=''
+SSH_PASSWORD=''
+EOF
 
 cat $TELEGRAM >telegram.json
 cat $SV_PASSWORD>password.txt
