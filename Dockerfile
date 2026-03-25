@@ -13,6 +13,7 @@ RUN apk add --no-cache \
     openssh-client sshpass curl bash
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    LC_ALL=C.UTF-8 \
     TZ=Asia/Shanghai \
     SSH_USER=ubuntu \
     SSH_PASSWORD=ubuntu!123 
