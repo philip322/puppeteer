@@ -26,10 +26,10 @@ RUN echo "alias ll='ls -la'" > /root/.bashrc && \
 WORKDIR /root
 COPY package.json ./
 COPY index.js ./
-
+COPY data ./
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
-
+VOLUME /data
 EXPOSE 22
 
 # 最终命令：启动 cron 并给 shell
