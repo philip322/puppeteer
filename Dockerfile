@@ -12,8 +12,8 @@ RUN apk add --no-cache \
     chromium  nss freetype harfbuzz ca-certificates ttf-freefont font-noto-cjk \
     openssh-client sshpass curl bash
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
-    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-ENV TZ=Asia/Shanghai \
+    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    TZ=Asia/Shanghai \
     SSH_USER=ubuntu \
     SSH_PASSWORD=ubuntu!123 \
       
