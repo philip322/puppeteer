@@ -15,7 +15,7 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     TZ=Asia/Shanghai \
     SSH_USER=ubuntu \
-    SSH_PASSWORD=ubuntu!123 \
+    SSH_PASSWORD=ubuntu!123 
       
 COPY --from=builder /app/node_modules /root/node_modules
 COPY --from=builder /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
