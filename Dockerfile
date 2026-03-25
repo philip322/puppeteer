@@ -3,7 +3,6 @@ FROM node:20-alpine AS builder
 RUN apk add --no-cache python3 make g++ tzdata
 RUN npm config set registry https://registry.npmmirror.com/  && \
     npm cache clean --force
-WORKDIR /app
 RUN npm install puppeteer@latest --production --legacy-peer-deps
 
 # 第二阶段打包镜像安装所需软件
